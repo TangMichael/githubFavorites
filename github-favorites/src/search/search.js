@@ -10,15 +10,31 @@ class Search extends Component {
     console.log("okk");
   }
 
+  handler = () =>{
+    fetch("https://api.github.com/search/repositories?q=tetris")
+    .then(res => res.json())
+    .then(json => {
+     // console.log(json.items.slice(0, 10));
+     // this.props.myProp = json.items.slice(0,10);
+     // console.log(repositories);
+      // var top10 = JSON.parse(json);
+      // console.log(top10.slice(0,10));
+      this.props.handler(json.items[2].id)
+      var e = json.items[1].id;
+      this.props.handler(e);
+    });
+
+  }
   componentDidMount() {
     fetch("https://api.github.com/search/repositories?q=tetris")
       .then(res => res.json())
       .then(json => {
        // console.log(json.items.slice(0, 10));
-        repositories = json.items.slice(0,10);
+       // this.props.myProp = json.items.slice(0,10);
        // console.log(repositories);
         // var top10 = JSON.parse(json);
         // console.log(top10.slice(0,10));
+        this.props.handler(json.items[1].id)
       });
   }
 
@@ -32,7 +48,7 @@ class Search extends Component {
           variant="outlined"
         />
         <Button
-          onClick={this.componentDidMount}
+          onClick={this.handler}
           variant="contained"
           color="primary"
         >
