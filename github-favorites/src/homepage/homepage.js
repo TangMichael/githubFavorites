@@ -13,14 +13,11 @@ class Homepage extends Component {
     }
 
     changeArray = (e) => {
-        // fetch("https://api.github.com/search/repositories?q=tetris") .then(res =>
-        // res.json()) .then(json => {   console.log(json.items.slice(0, 10));   // var
-        // top10 = JSON.parse(json);   // console.log(top10.slice(0,10));
-        // this.setState({     someVar: json.items[0].id   }) });
+      console.log(e);
         this.setState({
             someVar: [
                 ...this.state.someVar,
-                e
+                e.id
             ]
         })
     }

@@ -34,18 +34,24 @@ class Search extends Component {
 
     render() {
         return (
-            <div className="search">
+            <div className="searchContainer">
+            <div className="searchFieldButton">
                 <TextField
                     id="outlined-bare"
                     defaultValue="Search Field"
                     margin="normal"
                     variant="outlined"/>
+                    <div>
                 <Button onClick={this.search} variant="contained" color="primary">
                     Search
                 </Button>
-                <DisplaySearch
-                    searchedItems={this.state.searchedItems}
-                    add={this.props.handler}></DisplaySearch>
+                </div>
+                </div>
+                <div>
+                    <DisplaySearch
+                        searchedItems={this.state.searchedItems}
+                        add={this.props.handler}></DisplaySearch>
+                </div>
             </div>
         );
     }

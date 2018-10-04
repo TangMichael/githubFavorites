@@ -1,3 +1,9 @@
-.search {
+.searchContainer {
     display:flex;
+    flex-direction: column;
+}
+.searchFieldButton{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
 }
