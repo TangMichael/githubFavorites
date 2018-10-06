@@ -2,6 +2,7 @@ import React, {Component} from "react";
 
 class DisplaySearch extends Component {
 
+    // uses parent class function from homepage.js
     add(element){
         this.props.add(element);
     }
@@ -11,9 +12,9 @@ class DisplaySearch extends Component {
         const listItems = this
             .props
             .searchedItems
-            .map((element) => element.map((element, index) => <li key={index}>{element.id}
-                <button
-                    onClick={() => this.add(element)}>ok</button>
+            .map((element) => element.map((element, index) => <li key={index}>{element.name} {element.language}
+                 <button
+                    onClick={() => this.add(element)}>add</button>
             </li>));
         return (
             <div>

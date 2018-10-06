@@ -12,13 +12,24 @@ class Homepage extends Component {
         };
     }
 
+    // update array with new element object
     changeArray = (e) => {
-      console.log(e);
         this.setState({
             someVar: [
                 ...this.state.someVar,
-                e.id
+                e
             ]
+        })
+    }
+
+    delete = (e) => {
+        // copy current array state
+        var array = [...this.state.someVar];
+        // take out element clicked
+        array.splice(e, 1);
+        // set state array to the new state
+        this.setState({
+            someVar: array
         })
     }
 
@@ -31,7 +42,7 @@ class Homepage extends Component {
                         <Search handler={this.changeArray}></Search>
                     </div>
                     <div className="favorites">
-                        <Favorites someVar={this.state.someVar}></Favorites>
+                        <Favorites someVar={this.state.someVar} delete={this.delete}></Favorites>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import "./search.css";
 import DisplaySearch from "../displaySearch/displaySearch";
 
 class Search extends Component {
+    searchValue = React.createRef();
     constructor() {
         super();
         this.state = {
@@ -13,7 +14,8 @@ class Search extends Component {
     }
 
     search = () => {
-        fetch("https://api.github.com/search/repositories?q=tetris")
+        // var url = "https://api.github.com/search/repositories?q=" + this.searchValue.value;
+        fetch("https://api.github.com/search/repositories?q=" + this.searchValue.value)
             .then(res => res.json())
             .then(json => {
                 // on search, reset state array to empty
@@ -27,25 +29,24 @@ class Search extends Component {
                             .slice(0, 10)
                     ]
                 });
-
             });
-
     }
 
     render() {
         return (
             <div className="searchContainer">
-            <div className="searchFieldButton">
-                <TextField
-                    id="outlined-bare"
-                    defaultValue="Search Field"
-                    margin="normal"
-                    variant="outlined"/>
+                <div className="searchFieldButton">
+                    <TextField
+                        id="outlined-bare"
+                        placeholder="Search Field"
+                        inputRef={(input) => this.searchValue = input}
+                        margin="normal"
+                        variant="outlined"/>
                     <div>
-                <Button onClick={this.search} variant="contained" color="primary">
-                    Search
-                </Button>
-                </div>
+                        <Button onClick={this.search} variant="contained" color="primary">
+                            Search
+                        </Button>
+                    </div>
                 </div>
                 <div>
                     <DisplaySearch
