@@ -14,10 +14,23 @@ class Search extends Component {
     }
 
     search = () => {
-        // var url = "https://api.github.com/search/repositories?q=" + this.searchValue.value;
+        // var url = "https://api.github.com/search/repositories?q=" +
+        // this.searchValue.value;
         fetch("https://api.github.com/search/repositories?q=" + this.searchValue.value)
             .then(res => res.json())
             .then(json => {
+                // trying to input tag value to a new object
+                // put that new object into state
+                // maybe better to construct the object here instead of sending every parameters
+                // just need name, language, latest tag
+                json
+                    .items
+                    .slice(0, 10)
+                    .map(item => fetch(item.url + "/releases/latest")
+                    .then(res => res.json())
+                    .then(json => {item.tag = json.name;
+                    console.log(item);
+                    }));
                 // on search, reset state array to empty
                 this.setState({searchedItems: []});
                 // fill empty array state with searched value

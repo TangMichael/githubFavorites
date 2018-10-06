@@ -4,8 +4,10 @@ import "./favorites.css";
 class Favorites extends Component {
 
     // uses parent class function from homepage.js
-    delete(element){
-        this.props.delete(element);
+    delete(element) {
+        this
+            .props
+            .delete(element);
     }
 
     render() {

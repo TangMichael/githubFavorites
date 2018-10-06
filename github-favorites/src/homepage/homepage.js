@@ -28,9 +28,7 @@ class Homepage extends Component {
         // take out element clicked
         array.splice(e, 1);
         // set state array to the new state
-        this.setState({
-            someVar: array
-        })
+        this.setState({someVar: array})
     }
 
     render() {
