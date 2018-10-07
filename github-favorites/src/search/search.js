@@ -14,21 +14,37 @@ class Search extends Component {
     }
 
     search = () => {
-        // var url = "https://api.github.com/search/repositories?q=" + this.searchValue.value;
+        var arr = [];
         fetch("https://api.github.com/search/repositories?q=" + this.searchValue.value)
             .then(res => res.json())
             .then(json => {
-                // on search, reset state array to empty
-                this.setState({searchedItems: []});
-                // fill empty array state with searched value
-                this.setState({
-                    searchedItems: [
-                        ...this.state.searchedItems,
-                        json
-                            .items
-                            .slice(0, 10)
-                    ]
-                });
+                json
+                    .items
+                    .slice(0, 10)
+                    .map(item => fetch(item.url + "/releases/latest").then(res => res.json()).then(json => {
+                        // if obj is initalize outside of the then, the attributes are changed but since
+                        // its a copy, the previous state of the object will also change thus, it
+                        // always displays the same repo/values building the object to send to the
+                        // children state
+                        var obj = {};
+                        obj.name = item.name;
+                        obj.language = item.language;
+                        obj.tag = json.name;
+                        // updating the array of object
+                        arr = [
+                            ...arr,
+                            obj
+                        ]
+                        // on search, reset state array to empty
+                        this.setState({searchedItems: []});
+                        // fill empty array state with searched value
+                        this.setState({
+                            searchedItems: [
+                                ...this.state.searchedItems,
+                                arr
+                            ]
+                        });
+                    }));
             });
     }
 
@@ -42,7 +58,7 @@ class Search extends Component {
                         inputRef={(input) => this.searchValue = input}
                         margin="normal"
                         variant="outlined"/>
-                    <div>
+                    <div className="button">
                         <Button onClick={this.search} variant="contained" color="primary">
                             Search
                         </Button>
@@ -50,6 +66,7 @@ class Search extends Component {
                 </div>
                 <div>
                     <DisplaySearch
+                        favorites={this.props.favorites}
                         searchedItems={this.state.searchedItems}
                         add={this.props.handler}></DisplaySearch>
                 </div>

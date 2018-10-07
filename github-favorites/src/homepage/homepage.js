@@ -8,29 +8,27 @@ class Homepage extends Component {
     constructor() {
         super();
         this.state = {
-            someVar: []
+            favorites: []
         };
     }
 
     // update array with new element object
     changeArray = (e) => {
         this.setState({
-            someVar: [
-                ...this.state.someVar,
+            favorites: [
+                ...this.state.favorites,
                 e
             ]
         })
     }
 
-    delete = (e) => {
+    delete = (index) => {
         // copy current array state
-        var array = [...this.state.someVar];
+        var array = [...this.state.favorites];
         // take out element clicked
-        array.splice(e, 1);
+        array.splice(index, 1);
         // set state array to the new state
-        this.setState({
-            someVar: array
-        })
+        this.setState({favorites: array})
     }
 
     render() {
@@ -39,10 +37,10 @@ class Homepage extends Component {
                 <Header></Header>
                 <div className="body">
                     <div className="search">
-                        <Search handler={this.changeArray}></Search>
+                        <Search handler={this.changeArray} favorites={this.state.favorites}></Search>
                     </div>
                     <div className="favorites">
-                        <Favorites someVar={this.state.someVar} delete={this.delete}></Favorites>
+                        <Favorites favorites={this.state.favorites} delete={this.delete}></Favorites>
                     </div>
                 </div>
             </div>
