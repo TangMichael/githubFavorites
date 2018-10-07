@@ -16,10 +16,7 @@ class DisplaySearch extends Component {
                     field: "language"
                 }, {
                     headerName: "Latest tag",
-                    field: "tag"
-                }, {
-                    headerName: "ok",
-                    field: "add"
+                    field: "tag",
                 }
             ],
             rowData: []
@@ -29,6 +26,7 @@ class DisplaySearch extends Component {
     onGridReady(params) {
         this.gridApi = params.api;
         this.gridColumnApi = params.columnApi;
+
     }
 
     componentDidUpdate() {
@@ -36,15 +34,21 @@ class DisplaySearch extends Component {
         this
             .props
             .searchedItems
-            .map((element) => element.map((element, index) => {
+            .map((item) => item.map((element, index) => {
                 var repo = {
-                    name: element.name,
-                    language: element.language,
-                    tag: element.tag
-                };
-                rowData = [...rowData, repo];
-                return this.gridApi.setRowData(rowData);
-            }));
+                                name: element.name,
+                                language: element.language,
+                                tag: element.tag,
+                               
+                            };
+                        rowData = [
+                            ...rowData,
+                            repo
+                        ];
+                        return this
+                            .gridApi
+                            .setRowData(rowData);
+                    }))
     }
 
     add(element) {

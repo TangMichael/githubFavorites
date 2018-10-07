@@ -14,34 +14,37 @@ class Search extends Component {
     }
 
     search = () => {
-        // var url = "https://api.github.com/search/repositories?q=" +
-        // this.searchValue.value;
+        var arr = [];
         fetch("https://api.github.com/search/repositories?q=" + this.searchValue.value)
             .then(res => res.json())
             .then(json => {
-                // trying to input tag value to a new object
-                // put that new object into state
-                // maybe better to construct the object here instead of sending every parameters
-                // just need name, language, latest tag
                 json
                     .items
-                    .slice(0, 10)
-                    .map(item => fetch(item.url + "/releases/latest")
-                    .then(res => res.json())
-                    .then(json => {item.tag = json.name;
-                    console.log(item);
+                    .slice(0, 2)
+                    .map(item => fetch(item.url + "/releases/latest").then(res => res.json()).then(json => {
+                        // if obj is initalize outside of the then, the attributes are changed but since
+                        // its a copy, the previous state of the object will also change thus, it
+                        // always displays the same repo/values building the object to send to the
+                        // children state
+                        var obj = {};
+                        obj.name = item.name;
+                        obj.language = item.language;
+                        obj.tag = json.name;
+                        // updating the array of object
+                        arr = [
+                            ...arr,
+                            obj
+                        ]
+                        // on search, reset state array to empty
+                        this.setState({searchedItems: []});
+                        // fill empty array state with searched value
+                        this.setState({
+                            searchedItems: [
+                                ...this.state.searchedItems,
+                                arr
+                            ]
+                        });
                     }));
-                // on search, reset state array to empty
-                this.setState({searchedItems: []});
-                // fill empty array state with searched value
-                this.setState({
-                    searchedItems: [
-                        ...this.state.searchedItems,
-                        json
-                            .items
-                            .slice(0, 10)
-                    ]
-                });
             });
     }
 
