@@ -1,6 +1,11 @@
 import React, {Component} from "react";
 import "./displaySearch.css";
 class DisplaySearch extends Component {
+    constructor(props) {
+        super(props);
+        console.log("in constructor");
+        console.log(props);
+    }
 
     // uses parent class function from homepage.js
     add(element) {
@@ -9,8 +14,14 @@ class DisplaySearch extends Component {
             .add(element);
     }
 
-    render() {
-        // on search, render new searchedItems and maps them into the list
+    ifExists = () => {
+        this
+            .props
+            .searchedItems
+            .map(element => this.props.s)
+    }
+
+    render() { // on search, render new searchedItems and maps them into the list
         const listItems = this
             .props
             .searchedItems
@@ -29,11 +40,12 @@ class DisplaySearch extends Component {
                         !this
                             .props
                             .favorites
-                            .includes(element.name) && <a href="#" onClick={() => this.add(element)}>Add</a>
+                            .includes(element) && <a href="#" onClick={() => this.add(element)}>Add</a>
 }
                     </div>
                 </div>
             </li>));
+
         return (
             <div>
                 <ul>
